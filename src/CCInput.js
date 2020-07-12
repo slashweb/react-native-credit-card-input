@@ -64,7 +64,12 @@ export default class CCInput extends Component {
   focus = () => this.refs.input.focus();
 
   _onFocus = () => this.props.onFocus(this.props.field);
-  _onChange = value => this.props.onChange(this.props.field, value);
+  _onChange = value => {
+    if (this.props.field === 'number' && value.length > 19) {
+      return
+    }
+    this.props.onChange(this.props.field, value);
+  } 
 
   render() {
     const { label, value, placeholder, status, keyboardType,
@@ -75,7 +80,7 @@ export default class CCInput extends Component {
       <TouchableOpacity onPress={this.focus}
         activeOpacity={0.99}>
         <View style={[containerStyle]}>
-          { !!label && <Text style={[labelStyle]}>{label}</Text>}
+          { !!label && <Text style={[labelStyle], {fontFamily: 'AvenirNextLTPro-Regular'}}>{label}</Text>}
           <TextInput ref="input"
             {...additionalInputProps}
             keyboardType={keyboardType}
